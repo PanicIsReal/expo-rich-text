@@ -67,7 +67,7 @@
   "license": "MIT",
   "homepage": "https://github.com/PanicIsReal/expo-rich-text#readme",
   "publishConfig": {
-    "access": "restricted"
+    "access": "public"
   },
   "dependencies": {},
   "devDependencies": {
