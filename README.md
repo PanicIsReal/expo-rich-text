@@ -22,19 +22,20 @@ A SwiftUI-backed Expo module that renders and animates rich text on iOS. Pairs a
 
 ## Installation
 
-This module is distributed via GitHub, not the npm registry. Add it to an Expo project (SDK 55+, custom dev client required — it is **not** available in Expo Go).
-
 ```sh
-npx expo install github:PanicIsReal/expo-rich-text @expo/ui
+npx expo install expo-rich-text @expo/ui
 ```
 
-Or pin to a specific commit / tag:
+Or with your package manager of choice:
 
 ```sh
-npx expo install "github:PanicIsReal/expo-rich-text#<commit-or-tag>" @expo/ui
+npm install expo-rich-text @expo/ui
+# yarn add expo-rich-text @expo/ui
+# pnpm add expo-rich-text @expo/ui
+# bun add expo-rich-text @expo/ui
 ```
 
-Then prebuild and build a development client:
+This module ships native iOS code and is **not** compatible with Expo Go — you need a [custom development client](https://docs.expo.dev/development/create-development-builds/). After installing, regenerate the native project and rebuild:
 
 ```sh
 npx expo prebuild --clean
