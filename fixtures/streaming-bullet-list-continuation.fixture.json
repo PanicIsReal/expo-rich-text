@@ -1,0 +1,176 @@
+{
+  "name": "streaming-bullet-list-continuation",
+  "text": "- First item\n- Second item\n- Third item",
+  "contentType": "markdown",
+  "animationMode": "token-reveal",
+  "expectedRenderedText": "• First item\n• Second item\n• Third item",
+  "document": {
+    "id": "doc-1ades7g",
+    "version": 1,
+    "source": {
+      "kind": "markdown",
+      "text": "- First item\n- Second item\n- Third item"
+    },
+    "blocks": [
+      {
+        "id": "block-3iv4mp",
+        "kind": "bullet-list",
+        "range": [
+          0,
+          39
+        ],
+        "childSpanIds": [],
+        "childBlockIds": [
+          "block-1shb3il",
+          "block-q280q2",
+          "block-a6zn1q"
+        ]
+      },
+      {
+        "id": "block-1shb3il",
+        "kind": "list-item",
+        "parentBlockId": "block-3iv4mp",
+        "range": [
+          0,
+          12
+        ],
+        "childSpanIds": [
+          "span-1fncr9g"
+        ]
+      },
+      {
+        "id": "block-q280q2",
+        "kind": "list-item",
+        "parentBlockId": "block-3iv4mp",
+        "range": [
+          13,
+          26
+        ],
+        "childSpanIds": [
+          "span-1xm895o"
+        ]
+      },
+      {
+        "id": "block-a6zn1q",
+        "kind": "list-item",
+        "parentBlockId": "block-3iv4mp",
+        "range": [
+          27,
+          39
+        ],
+        "childSpanIds": [
+          "span-1qpiuim"
+        ]
+      }
+    ],
+    "spans": [
+      {
+        "id": "span-1fncr9g",
+        "blockId": "block-1shb3il",
+        "kind": "text",
+        "text": "First item",
+        "range": [
+          0,
+          10
+        ],
+        "styleKey": "body",
+        "animationGroupId": "anim-group-1al9ogq"
+      },
+      {
+        "id": "span-1xm895o",
+        "blockId": "block-q280q2",
+        "kind": "text",
+        "text": "Second item",
+        "range": [
+          13,
+          24
+        ],
+        "styleKey": "body",
+        "animationGroupId": "anim-group-vgsy1f"
+      },
+      {
+        "id": "span-1qpiuim",
+        "blockId": "block-a6zn1q",
+        "kind": "text",
+        "text": "Third item",
+        "range": [
+          27,
+          37
+        ],
+        "styleKey": "body",
+        "animationGroupId": "anim-group-5mdfa7"
+      }
+    ],
+    "animationPlan": {
+      "mode": "token-reveal",
+      "units": [
+        {
+          "id": "anim-5ow903",
+          "spanId": "span-1fncr9g",
+          "kind": "token",
+          "text": "First ",
+          "range": [
+            0,
+            6
+          ],
+          "ordinal": 0
+        },
+        {
+          "id": "anim-18n9r6s",
+          "spanId": "span-1fncr9g",
+          "kind": "token",
+          "text": "item",
+          "range": [
+            6,
+            10
+          ],
+          "ordinal": 1
+        },
+        {
+          "id": "anim-wc84s2",
+          "spanId": "span-1xm895o",
+          "kind": "token",
+          "text": "Second ",
+          "range": [
+            13,
+            20
+          ],
+          "ordinal": 2
+        },
+        {
+          "id": "anim-zrjwpa",
+          "spanId": "span-1xm895o",
+          "kind": "token",
+          "text": "item",
+          "range": [
+            20,
+            24
+          ],
+          "ordinal": 3
+        },
+        {
+          "id": "anim-1y3bvze",
+          "spanId": "span-1qpiuim",
+          "kind": "token",
+          "text": "Third ",
+          "range": [
+            27,
+            33
+          ],
+          "ordinal": 4
+        },
+        {
+          "id": "anim-c4n39w",
+          "spanId": "span-1qpiuim",
+          "kind": "token",
+          "text": "item",
+          "range": [
+            33,
+            37
+          ],
+          "ordinal": 5
+        }
+      ]
+    }
+  }
+}

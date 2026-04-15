@@ -1,0 +1,114 @@
+{
+  "name": "streaming-paragraph-newline",
+  "text": "First paragraph\n\nSecond paragraph",
+  "contentType": "markdown",
+  "animationMode": "word-reveal",
+  "expectedRenderedText": "First paragraph\nSecond paragraph",
+  "document": {
+    "id": "doc-1ades7g",
+    "version": 1,
+    "source": {
+      "kind": "markdown",
+      "text": "First paragraph\n\nSecond paragraph"
+    },
+    "blocks": [
+      {
+        "id": "block-2yaxsp",
+        "kind": "paragraph",
+        "range": [
+          0,
+          15
+        ],
+        "childSpanIds": [
+          "span-a45vcb"
+        ]
+      },
+      {
+        "id": "block-fnxegq",
+        "kind": "paragraph",
+        "range": [
+          17,
+          33
+        ],
+        "childSpanIds": [
+          "span-13hqrmx"
+        ]
+      }
+    ],
+    "spans": [
+      {
+        "id": "span-a45vcb",
+        "blockId": "block-2yaxsp",
+        "kind": "text",
+        "text": "First paragraph",
+        "range": [
+          0,
+          15
+        ],
+        "styleKey": "body",
+        "animationGroupId": "anim-group-b0pe7w"
+      },
+      {
+        "id": "span-13hqrmx",
+        "blockId": "block-fnxegq",
+        "kind": "text",
+        "text": "Second paragraph",
+        "range": [
+          17,
+          33
+        ],
+        "styleKey": "body",
+        "animationGroupId": "anim-group-sckh7w"
+      }
+    ],
+    "animationPlan": {
+      "mode": "word-reveal",
+      "units": [
+        {
+          "id": "anim-1vc3mkl",
+          "spanId": "span-a45vcb",
+          "kind": "word",
+          "text": "First ",
+          "range": [
+            0,
+            6
+          ],
+          "ordinal": 0
+        },
+        {
+          "id": "anim-17gd9t5",
+          "spanId": "span-a45vcb",
+          "kind": "word",
+          "text": "paragraph",
+          "range": [
+            6,
+            15
+          ],
+          "ordinal": 1
+        },
+        {
+          "id": "anim-zkkwoe",
+          "spanId": "span-13hqrmx",
+          "kind": "word",
+          "text": "Second ",
+          "range": [
+            17,
+            24
+          ],
+          "ordinal": 2
+        },
+        {
+          "id": "anim-9aw5wq",
+          "spanId": "span-13hqrmx",
+          "kind": "word",
+          "text": "paragraph",
+          "range": [
+            24,
+            33
+          ],
+          "ordinal": 3
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "name": "streaming-false-transition-settles-after-effects",
+  "settings": {
+    "animationMode": "glyph-reveal",
+    "isStreaming": true,
+    "revealUnitsPerStep": 2,
+    "revealIntervalMs": 96,
+    "fadeDurationMs": 180,
+    "fadeStartOpacity": 0.22,
+    "revealPreset": "fade-trail",
+    "shaderPreset": "none",
+    "shaderStrength": 1,
+    "cursorEnabled": false,
+    "cursorGlyph": "▍",
+    "tailLength": 4,
+    "smoothReveal": false,
+    "smoothNewLine": false
+  },
+  "steps": [
+    {
+      "action": "applyDocument",
+      "now": 0,
+      "payload": "{\"id\":\"doc-1mr1k6f\",\"version\":1,\"source\":{\"kind\":\"plain\",\"text\":\"ABCD\"},\"blocks\":[{\"id\":\"block-e8l4tf\",\"kind\":\"paragraph\",\"range\":[0,4],\"childSpanIds\":[\"span-9qx6wx\"]}],\"spans\":[{\"id\":\"span-9qx6wx\",\"blockId\":\"block-e8l4tf\",\"kind\":\"text\",\"text\":\"ABCD\",\"range\":[0,4],\"styleKey\":\"body\",\"animationGroupId\":\"anim-group-v4seky\"}],\"animationPlan\":{\"mode\":\"glyph-reveal\",\"units\":[{\"id\":\"anim-1e9cahv\",\"spanId\":\"span-9qx6wx\",\"kind\":\"grapheme\",\"text\":\"A\",\"range\":[0,1],\"ordinal\":0},{\"id\":\"anim-empcdd\",\"spanId\":\"span-9qx6wx\",\"kind\":\"grapheme\",\"text\":\"B\",\"range\":[1,2],\"ordinal\":1},{\"id\":\"anim-zkzojv\",\"spanId\":\"span-9qx6wx\",\"kind\":\"grapheme\",\"text\":\"C\",\"range\":[2,3],\"ordinal\":2},{\"id\":\"anim-1mr6ua5\",\"spanId\":\"span-9qx6wx\",\"kind\":\"grapheme\",\"text\":\"D\",\"range\":[3,4],\"ordinal\":3}]}}",
+      "expect": {
+        "visibleText": "AB",
+        "revealedUnitCount": 2,
+        "playbackPhase": "revealing",
+        "requiresRevealTimer": true,
+        "requiresVisualEffectTimer": false
+      }
+    },
+    {
+      "action": "tick",
+      "now": 0.1,
+      "expect": {
+        "visibleText": "ABCD",
+        "revealedUnitCount": 4,
+        "playbackPhase": "settling",
+        "requiresRevealTimer": false,
+        "requiresVisualEffectTimer": true
+      }
+    },
+    {
+      "action": "updateSettings",
+      "now": 0.2,
+      "payload": {
+        "animationMode": "glyph-reveal",
+        "isStreaming": false,
+        "revealUnitsPerStep": 2,
+        "revealIntervalMs": 96,
+        "fadeDurationMs": 180,
+        "fadeStartOpacity": 0.22,
+        "revealPreset": "fade-trail",
+        "shaderPreset": "none",
+        "shaderStrength": 1,
+        "cursorEnabled": false,
+        "cursorGlyph": "▍",
+        "tailLength": 4,
+        "smoothReveal": false,
+        "smoothNewLine": false
+      },
+      "expect": {
+        "visibleText": "ABCD",
+        "revealedUnitCount": 4,
+        "playbackPhase": "settling",
+        "requiresRevealTimer": false,
+        "requiresVisualEffectTimer": true
+      }
+    },
+    {
+      "action": "tick",
+      "now": 1,
+      "expect": {
+        "visibleText": "ABCD",
+        "revealedUnitCount": 4,
+        "playbackPhase": "settled",
+        "requiresRevealTimer": false,
+        "requiresVisualEffectTimer": false
+      }
+    }
+  ]
+}

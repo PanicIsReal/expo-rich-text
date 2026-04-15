@@ -1,0 +1,67 @@
+{
+  "name": "word-reveal-preserves-visible-text-across-append",
+  "settings": {
+    "animationMode": "word-reveal",
+    "isStreaming": true,
+    "revealUnitsPerStep": 1,
+    "revealIntervalMs": 96,
+    "fadeDurationMs": 0,
+    "fadeStartOpacity": 0.22,
+    "revealPreset": "fade-trail",
+    "shaderPreset": "none",
+    "shaderStrength": 1,
+    "cursorEnabled": false,
+    "cursorGlyph": "▍",
+    "tailLength": 4,
+    "smoothReveal": false,
+    "smoothNewLine": false
+  },
+  "steps": [
+    {
+      "action": "applyUpdate",
+      "now": 0,
+      "payload": "{\"version\":2,\"kind\":\"reset\",\"generation\":1,\"documentJson\":\"{\\\"id\\\":\\\"doc-1mr1k6f\\\",\\\"version\\\":1,\\\"source\\\":{\\\"kind\\\":\\\"plain\\\",\\\"text\\\":\\\"Hello world\\\"},\\\"blocks\\\":[{\\\"id\\\":\\\"block-e8l4tf\\\",\\\"kind\\\":\\\"paragraph\\\",\\\"range\\\":[0,11],\\\"childSpanIds\\\":[\\\"span-9qx6wx\\\"]}],\\\"spans\\\":[{\\\"id\\\":\\\"span-9qx6wx\\\",\\\"blockId\\\":\\\"block-e8l4tf\\\",\\\"kind\\\":\\\"text\\\",\\\"text\\\":\\\"Hello world\\\",\\\"range\\\":[0,11],\\\"styleKey\\\":\\\"body\\\",\\\"animationGroupId\\\":\\\"anim-group-v4seky\\\"}],\\\"animationPlan\\\":{\\\"mode\\\":\\\"word-reveal\\\",\\\"units\\\":[{\\\"id\\\":\\\"anim-1osh2n7\\\",\\\"spanId\\\":\\\"span-9qx6wx\\\",\\\"kind\\\":\\\"word\\\",\\\"text\\\":\\\"Hello \\\",\\\"range\\\":[0,6],\\\"ordinal\\\":0},{\\\"id\\\":\\\"anim-ofrp43\\\",\\\"spanId\\\":\\\"span-9qx6wx\\\",\\\"kind\\\":\\\"word\\\",\\\"text\\\":\\\"world\\\",\\\"range\\\":[6,11],\\\"ordinal\\\":1}]}}\",\"isStreaming\":true}",
+      "expect": {
+        "visibleText": "Hello ",
+        "revealedUnitCount": 1,
+        "playbackPhase": "revealing",
+        "requiresRevealTimer": true,
+        "requiresVisualEffectTimer": false
+      }
+    },
+    {
+      "action": "applyUpdate",
+      "now": 0.1,
+      "payload": "{\"version\":2,\"kind\":\"replace\",\"generation\":2,\"preservedPrefixUtf16\":6,\"documentJson\":\"{\\\"id\\\":\\\"doc-1mr1k6f\\\",\\\"version\\\":1,\\\"source\\\":{\\\"kind\\\":\\\"plain\\\",\\\"text\\\":\\\"Hello world again\\\"},\\\"blocks\\\":[{\\\"id\\\":\\\"block-e8l4tf\\\",\\\"kind\\\":\\\"paragraph\\\",\\\"range\\\":[0,17],\\\"childSpanIds\\\":[\\\"span-9qx6wx\\\"]}],\\\"spans\\\":[{\\\"id\\\":\\\"span-9qx6wx\\\",\\\"blockId\\\":\\\"block-e8l4tf\\\",\\\"kind\\\":\\\"text\\\",\\\"text\\\":\\\"Hello world again\\\",\\\"range\\\":[0,17],\\\"styleKey\\\":\\\"body\\\",\\\"animationGroupId\\\":\\\"anim-group-v4seky\\\"}],\\\"animationPlan\\\":{\\\"mode\\\":\\\"word-reveal\\\",\\\"units\\\":[{\\\"id\\\":\\\"anim-1osh2n7\\\",\\\"spanId\\\":\\\"span-9qx6wx\\\",\\\"kind\\\":\\\"word\\\",\\\"text\\\":\\\"Hello \\\",\\\"range\\\":[0,6],\\\"ordinal\\\":0},{\\\"id\\\":\\\"anim-tc71tl\\\",\\\"spanId\\\":\\\"span-9qx6wx\\\",\\\"kind\\\":\\\"word\\\",\\\"text\\\":\\\"world \\\",\\\"range\\\":[6,12],\\\"ordinal\\\":1},{\\\"id\\\":\\\"anim-hidx6o\\\",\\\"spanId\\\":\\\"span-9qx6wx\\\",\\\"kind\\\":\\\"word\\\",\\\"text\\\":\\\"again\\\",\\\"range\\\":[12,17],\\\"ordinal\\\":2}]}}\",\"isStreaming\":true}",
+      "expect": {
+        "visibleText": "Hello ",
+        "revealedUnitCount": 1,
+        "playbackPhase": "revealing",
+        "requiresRevealTimer": true,
+        "requiresVisualEffectTimer": false
+      }
+    },
+    {
+      "action": "tick",
+      "now": 0.2,
+      "expect": {
+        "visibleText": "Hello world ",
+        "revealedUnitCount": 2,
+        "playbackPhase": "revealing",
+        "requiresRevealTimer": true,
+        "requiresVisualEffectTimer": true
+      }
+    },
+    {
+      "action": "tick",
+      "now": 0.3,
+      "expect": {
+        "visibleText": "Hello world again",
+        "revealedUnitCount": 3,
+        "playbackPhase": "settling",
+        "requiresRevealTimer": false,
+        "requiresVisualEffectTimer": true
+      }
+    }
+  ]
+}

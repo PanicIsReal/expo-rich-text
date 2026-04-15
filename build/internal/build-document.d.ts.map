@@ -1,0 +1,1 @@
+{"version":3,"file":"build-document.d.ts","sourceRoot":"","sources":["../../src/internal/build-document.ts"],"names":[],"mappings":"AAIA,OAAO,EAEL,KAAK,aAAa,EAClB,KAAK,YAAY,EACjB,KAAK,cAAc,EACpB,MAAM,YAAY,CAAC;AAEpB,wBAAgB,iBAAiB,CAAC,EAChC,IAAI,EACJ,UAAU,EACV,aAAa,GACd,EAAE;IACD,IAAI,EAAE,MAAM,CAAC;IACb,UAAU,EAAE,cAAc,CAAC;IAC3B,aAAa,EAAE,aAAa,CAAC;CAC9B,GAAG,YAAY,CAcf"}

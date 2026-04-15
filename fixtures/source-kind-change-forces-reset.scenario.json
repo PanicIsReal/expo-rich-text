@@ -1,0 +1,45 @@
+{
+  "name": "source-kind-change-forces-reset",
+  "settings": {
+    "animationMode": "glyph-reveal",
+    "isStreaming": true,
+    "revealUnitsPerStep": 1,
+    "revealIntervalMs": 96,
+    "fadeDurationMs": 0,
+    "fadeStartOpacity": 0.22,
+    "revealPreset": "fade-trail",
+    "shaderPreset": "none",
+    "shaderStrength": 1,
+    "cursorEnabled": false,
+    "cursorGlyph": "▍",
+    "tailLength": 4,
+    "smoothReveal": false,
+    "smoothNewLine": false
+  },
+  "steps": [
+    {
+      "action": "applyUpdate",
+      "now": 0,
+      "payload": "{\"version\":2,\"kind\":\"reset\",\"generation\":1,\"documentJson\":\"{\\\"id\\\":\\\"doc-1mr1k6f\\\",\\\"version\\\":1,\\\"source\\\":{\\\"kind\\\":\\\"plain\\\",\\\"text\\\":\\\"Plain text\\\"},\\\"blocks\\\":[{\\\"id\\\":\\\"block-e8l4tf\\\",\\\"kind\\\":\\\"paragraph\\\",\\\"range\\\":[0,10],\\\"childSpanIds\\\":[\\\"span-9qx6wx\\\"]}],\\\"spans\\\":[{\\\"id\\\":\\\"span-9qx6wx\\\",\\\"blockId\\\":\\\"block-e8l4tf\\\",\\\"kind\\\":\\\"text\\\",\\\"text\\\":\\\"Plain text\\\",\\\"range\\\":[0,10],\\\"styleKey\\\":\\\"body\\\",\\\"animationGroupId\\\":\\\"anim-group-v4seky\\\"}],\\\"animationPlan\\\":{\\\"mode\\\":\\\"glyph-reveal\\\",\\\"units\\\":[{\\\"id\\\":\\\"anim-19jj1pc\\\",\\\"spanId\\\":\\\"span-9qx6wx\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"P\\\",\\\"range\\\":[0,1],\\\"ordinal\\\":0},{\\\"id\\\":\\\"anim-434g0f\\\",\\\"spanId\\\":\\\"span-9qx6wx\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"l\\\",\\\"range\\\":[1,2],\\\"ordinal\\\":1},{\\\"id\\\":\\\"anim-r9blqp\\\",\\\"spanId\\\":\\\"span-9qx6wx\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"a\\\",\\\"range\\\":[2,3],\\\"ordinal\\\":2},{\\\"id\\\":\\\"anim-1s0zagm\\\",\\\"spanId\\\":\\\"span-9qx6wx\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"i\\\",\\\"range\\\":[3,4],\\\"ordinal\\\":3},{\\\"id\\\":\\\"anim-1twmp72\\\",\\\"spanId\\\":\\\"span-9qx6wx\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"n\\\",\\\"range\\\":[4,5],\\\"ordinal\\\":4},{\\\"id\\\":\\\"anim-akrytj\\\",\\\"spanId\\\":\\\"span-9qx6wx\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\" \\\",\\\"range\\\":[5,6],\\\"ordinal\\\":5},{\\\"id\\\":\\\"anim-1i4y1la\\\",\\\"spanId\\\":\\\"span-9qx6wx\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"t\\\",\\\"range\\\":[6,7],\\\"ordinal\\\":6},{\\\"id\\\":\\\"anim-hxi8vi\\\",\\\"spanId\\\":\\\"span-9qx6wx\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"e\\\",\\\"range\\\":[7,8],\\\"ordinal\\\":7},{\\\"id\\\":\\\"anim-1ve47ow\\\",\\\"spanId\\\":\\\"span-9qx6wx\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"x\\\",\\\"range\\\":[8,9],\\\"ordinal\\\":8},{\\\"id\\\":\\\"anim-pxplzz\\\",\\\"spanId\\\":\\\"span-9qx6wx\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"t\\\",\\\"range\\\":[9,10],\\\"ordinal\\\":9}]}}\",\"isStreaming\":true}",
+      "expect": {
+        "visibleText": "P",
+        "revealedUnitCount": 1,
+        "playbackPhase": "revealing",
+        "requiresRevealTimer": true,
+        "requiresVisualEffectTimer": false
+      }
+    },
+    {
+      "action": "applyUpdate",
+      "now": 0.1,
+      "payload": "{\"version\":2,\"kind\":\"reset\",\"generation\":2,\"documentJson\":\"{\\\"id\\\":\\\"doc-1ades7g\\\",\\\"version\\\":1,\\\"source\\\":{\\\"kind\\\":\\\"markdown\\\",\\\"text\\\":\\\"Plain text\\\\n- now markdown\\\"},\\\"blocks\\\":[{\\\"id\\\":\\\"block-2yaxsp\\\",\\\"kind\\\":\\\"paragraph\\\",\\\"range\\\":[0,10],\\\"childSpanIds\\\":[\\\"span-a45vcb\\\"]},{\\\"id\\\":\\\"block-7bt18d\\\",\\\"kind\\\":\\\"bullet-list\\\",\\\"range\\\":[11,25],\\\"childSpanIds\\\":[],\\\"childBlockIds\\\":[\\\"block-b0ljlo\\\"]},{\\\"id\\\":\\\"block-b0ljlo\\\",\\\"kind\\\":\\\"list-item\\\",\\\"parentBlockId\\\":\\\"block-7bt18d\\\",\\\"range\\\":[11,25],\\\"childSpanIds\\\":[\\\"span-ib2i11\\\"]}],\\\"spans\\\":[{\\\"id\\\":\\\"span-a45vcb\\\",\\\"blockId\\\":\\\"block-2yaxsp\\\",\\\"kind\\\":\\\"text\\\",\\\"text\\\":\\\"Plain text\\\",\\\"range\\\":[0,10],\\\"styleKey\\\":\\\"body\\\",\\\"animationGroupId\\\":\\\"anim-group-a6ql4z\\\"},{\\\"id\\\":\\\"span-ib2i11\\\",\\\"blockId\\\":\\\"block-b0ljlo\\\",\\\"kind\\\":\\\"text\\\",\\\"text\\\":\\\"now markdown\\\",\\\"range\\\":[11,23],\\\"styleKey\\\":\\\"body\\\",\\\"animationGroupId\\\":\\\"anim-group-zu2ujl\\\"}],\\\"animationPlan\\\":{\\\"mode\\\":\\\"glyph-reveal\\\",\\\"units\\\":[{\\\"id\\\":\\\"anim-18ftf5s\\\",\\\"spanId\\\":\\\"span-a45vcb\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"P\\\",\\\"range\\\":[0,1],\\\"ordinal\\\":0},{\\\"id\\\":\\\"anim-kqpdv3\\\",\\\"spanId\\\":\\\"span-a45vcb\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"l\\\",\\\"range\\\":[1,2],\\\"ordinal\\\":1},{\\\"id\\\":\\\"anim-17wwjld\\\",\\\"spanId\\\":\\\"span-a45vcb\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"a\\\",\\\"range\\\":[2,3],\\\"ordinal\\\":2},{\\\"id\\\":\\\"anim-9ng6c6\\\",\\\"spanId\\\":\\\"span-a45vcb\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"i\\\",\\\"range\\\":[3,4],\\\"ordinal\\\":3},{\\\"id\\\":\\\"anim-bj1dgu\\\",\\\"spanId\\\":\\\"span-a45vcb\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"n\\\",\\\"range\\\":[4,5],\\\"ordinal\\\":4},{\\\"id\\\":\\\"anim-1qqvtuv\\\",\\\"spanId\\\":\\\"span-a45vcb\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\" \\\",\\\"range\\\":[5,6],\\\"ordinal\\\":5},{\\\"id\\\":\\\"anim-1y3pn1q\\\",\\\"spanId\\\":\\\"span-a45vcb\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"t\\\",\\\"range\\\":[6,7],\\\"ordinal\\\":6},{\\\"id\\\":\\\"anim-xwc1xq\\\",\\\"spanId\\\":\\\"span-a45vcb\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"e\\\",\\\"range\\\":[7,8],\\\"ordinal\\\":7},{\\\"id\\\":\\\"anim-d0l3kg\\\",\\\"spanId\\\":\\\"span-a45vcb\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"x\\\",\\\"range\\\":[8,9],\\\"ordinal\\\":8},{\\\"id\\\":\\\"anim-16lajun\\\",\\\"spanId\\\":\\\"span-a45vcb\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"t\\\",\\\"range\\\":[9,10],\\\"ordinal\\\":9},{\\\"id\\\":\\\"anim-1pu4h27\\\",\\\"spanId\\\":\\\"span-ib2i11\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"n\\\",\\\"range\\\":[11,12],\\\"ordinal\\\":10},{\\\"id\\\":\\\"anim-14buxhr\\\",\\\"spanId\\\":\\\"span-ib2i11\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"o\\\",\\\"range\\\":[12,13],\\\"ordinal\\\":11},{\\\"id\\\":\\\"anim-8033h6\\\",\\\"spanId\\\":\\\"span-ib2i11\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"w\\\",\\\"range\\\":[13,14],\\\"ordinal\\\":12},{\\\"id\\\":\\\"anim-jmwajk\\\",\\\"spanId\\\":\\\"span-ib2i11\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\" \\\",\\\"range\\\":[14,15],\\\"ordinal\\\":13},{\\\"id\\\":\\\"anim-c02vnq\\\",\\\"spanId\\\":\\\"span-ib2i11\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"m\\\",\\\"range\\\":[15,16],\\\"ordinal\\\":14},{\\\"id\\\":\\\"anim-1t4s831\\\",\\\"spanId\\\":\\\"span-ib2i11\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"a\\\",\\\"range\\\":[16,17],\\\"ordinal\\\":15},{\\\"id\\\":\\\"anim-ub1r7x\\\",\\\"spanId\\\":\\\"span-ib2i11\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"r\\\",\\\"range\\\":[17,18],\\\"ordinal\\\":16},{\\\"id\\\":\\\"anim-1s9r36l\\\",\\\"spanId\\\":\\\"span-ib2i11\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"k\\\",\\\"range\\\":[18,19],\\\"ordinal\\\":17},{\\\"id\\\":\\\"anim-hnefk5\\\",\\\"spanId\\\":\\\"span-ib2i11\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"d\\\",\\\"range\\\":[19,20],\\\"ordinal\\\":18},{\\\"id\\\":\\\"anim-1wu6k4n\\\",\\\"spanId\\\":\\\"span-ib2i11\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"o\\\",\\\"range\\\":[20,21],\\\"ordinal\\\":19},{\\\"id\\\":\\\"anim-1vpsyx7\\\",\\\"spanId\\\":\\\"span-ib2i11\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"w\\\",\\\"range\\\":[21,22],\\\"ordinal\\\":20},{\\\"id\\\":\\\"anim-keva2b\\\",\\\"spanId\\\":\\\"span-ib2i11\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"n\\\",\\\"range\\\":[22,23],\\\"ordinal\\\":21}]}}\",\"isStreaming\":true}",
+      "expect": {
+        "visibleText": "P",
+        "revealedUnitCount": 1,
+        "playbackPhase": "revealing",
+        "requiresRevealTimer": true,
+        "requiresVisualEffectTimer": false
+      }
+    }
+  ]
+}

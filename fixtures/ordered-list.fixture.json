@@ -1,0 +1,113 @@
+{
+  "name": "ordered-list",
+  "text": "1. First\n2. Second",
+  "contentType": "markdown",
+  "animationMode": "token-reveal",
+  "expectedRenderedText": "1. First\n2. Second",
+  "document": {
+    "id": "doc-1ades7g",
+    "version": 1,
+    "source": {
+      "kind": "markdown",
+      "text": "1. First\n2. Second"
+    },
+    "blocks": [
+      {
+        "id": "block-v0kkf2",
+        "kind": "ordered-list",
+        "range": [
+          0,
+          18
+        ],
+        "childSpanIds": [],
+        "childBlockIds": [
+          "block-qjwelg",
+          "block-j84x84"
+        ]
+      },
+      {
+        "id": "block-qjwelg",
+        "kind": "list-item",
+        "parentBlockId": "block-v0kkf2",
+        "range": [
+          0,
+          8
+        ],
+        "childSpanIds": [
+          "span-bn7bq6"
+        ],
+        "metadata": {
+          "orderedIndex": 1
+        }
+      },
+      {
+        "id": "block-j84x84",
+        "kind": "list-item",
+        "parentBlockId": "block-v0kkf2",
+        "range": [
+          9,
+          18
+        ],
+        "childSpanIds": [
+          "span-1ly93lf"
+        ],
+        "metadata": {
+          "orderedIndex": 2
+        }
+      }
+    ],
+    "spans": [
+      {
+        "id": "span-bn7bq6",
+        "blockId": "block-qjwelg",
+        "kind": "text",
+        "text": "First",
+        "range": [
+          0,
+          5
+        ],
+        "styleKey": "body",
+        "animationGroupId": "anim-group-v29rec"
+      },
+      {
+        "id": "span-1ly93lf",
+        "blockId": "block-j84x84",
+        "kind": "text",
+        "text": "Second",
+        "range": [
+          9,
+          15
+        ],
+        "styleKey": "body",
+        "animationGroupId": "anim-group-iwe5um"
+      }
+    ],
+    "animationPlan": {
+      "mode": "token-reveal",
+      "units": [
+        {
+          "id": "anim-1mzofqp",
+          "spanId": "span-bn7bq6",
+          "kind": "token",
+          "text": "First",
+          "range": [
+            0,
+            5
+          ],
+          "ordinal": 0
+        },
+        {
+          "id": "anim-mtwkyx",
+          "spanId": "span-1ly93lf",
+          "kind": "token",
+          "text": "Second",
+          "range": [
+            9,
+            15
+          ],
+          "ordinal": 1
+        }
+      ]
+    }
+  }
+}

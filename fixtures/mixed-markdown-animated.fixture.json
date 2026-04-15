@@ -1,0 +1,210 @@
+{
+  "name": "mixed-markdown-animated",
+  "text": "# Intro\n\n- Alpha\n- **Beta**\n\n`gamma`\n> delta",
+  "contentType": "markdown",
+  "animationMode": "word-reveal",
+  "expectedRenderedText": "Intro\n• Alpha\n• Beta\ngamma\n▍ delta",
+  "document": {
+    "id": "doc-1ades7g",
+    "version": 1,
+    "source": {
+      "kind": "markdown",
+      "text": "# Intro\n\n- Alpha\n- **Beta**\n\n`gamma`\n> delta"
+    },
+    "blocks": [
+      {
+        "id": "block-1kg0xo5",
+        "kind": "heading",
+        "level": 1,
+        "range": [
+          0,
+          7
+        ],
+        "childSpanIds": [
+          "span-1jl2lpr"
+        ]
+      },
+      {
+        "id": "block-10ypdy",
+        "kind": "bullet-list",
+        "range": [
+          9,
+          27
+        ],
+        "childSpanIds": [],
+        "childBlockIds": [
+          "block-3diw76",
+          "block-1eed1q6"
+        ]
+      },
+      {
+        "id": "block-3diw76",
+        "kind": "list-item",
+        "parentBlockId": "block-10ypdy",
+        "range": [
+          9,
+          16
+        ],
+        "childSpanIds": [
+          "span-lmhrn3"
+        ]
+      },
+      {
+        "id": "block-1eed1q6",
+        "kind": "list-item",
+        "parentBlockId": "block-10ypdy",
+        "range": [
+          17,
+          27
+        ],
+        "childSpanIds": [
+          "span-1z0a6qx"
+        ]
+      },
+      {
+        "id": "block-1vpjhfk",
+        "kind": "paragraph",
+        "range": [
+          29,
+          36
+        ],
+        "childSpanIds": [
+          "span-1mnrpyv"
+        ]
+      },
+      {
+        "id": "block-fvmhzv",
+        "kind": "blockquote",
+        "range": [
+          37,
+          44
+        ],
+        "childSpanIds": [
+          "span-1u6857p"
+        ]
+      }
+    ],
+    "spans": [
+      {
+        "id": "span-1jl2lpr",
+        "blockId": "block-1kg0xo5",
+        "kind": "text",
+        "text": "Intro",
+        "range": [
+          0,
+          5
+        ],
+        "styleKey": "heading-1",
+        "animationGroupId": "anim-group-1a2029t"
+      },
+      {
+        "id": "span-lmhrn3",
+        "blockId": "block-3diw76",
+        "kind": "text",
+        "text": "Alpha",
+        "range": [
+          9,
+          14
+        ],
+        "styleKey": "body",
+        "animationGroupId": "anim-group-rx2s39"
+      },
+      {
+        "id": "span-1z0a6qx",
+        "blockId": "block-1eed1q6",
+        "kind": "strong",
+        "text": "Beta",
+        "range": [
+          17,
+          25
+        ],
+        "styleKey": "body-strong",
+        "animationGroupId": "anim-group-e4wbov"
+      },
+      {
+        "id": "span-1mnrpyv",
+        "blockId": "block-1vpjhfk",
+        "kind": "code",
+        "text": "gamma",
+        "range": [
+          29,
+          36
+        ],
+        "styleKey": "body-code",
+        "animationGroupId": "anim-group-11qvpf9"
+      },
+      {
+        "id": "span-1u6857p",
+        "blockId": "block-fvmhzv",
+        "kind": "text",
+        "text": "delta",
+        "range": [
+          37,
+          42
+        ],
+        "styleKey": "blockquote",
+        "animationGroupId": "anim-group-13w5758"
+      }
+    ],
+    "animationPlan": {
+      "mode": "word-reveal",
+      "units": [
+        {
+          "id": "anim-16a9pih",
+          "spanId": "span-1jl2lpr",
+          "kind": "word",
+          "text": "Intro",
+          "range": [
+            0,
+            5
+          ],
+          "ordinal": 0
+        },
+        {
+          "id": "anim-1eompbd",
+          "spanId": "span-lmhrn3",
+          "kind": "word",
+          "text": "Alpha",
+          "range": [
+            9,
+            14
+          ],
+          "ordinal": 1
+        },
+        {
+          "id": "anim-1t4eovv",
+          "spanId": "span-1z0a6qx",
+          "kind": "word",
+          "text": "Beta",
+          "range": [
+            17,
+            21
+          ],
+          "ordinal": 2
+        },
+        {
+          "id": "anim-14uyjd9",
+          "spanId": "span-1mnrpyv",
+          "kind": "word",
+          "text": "gamma",
+          "range": [
+            29,
+            34
+          ],
+          "ordinal": 3
+        },
+        {
+          "id": "anim-15etv1o",
+          "spanId": "span-1u6857p",
+          "kind": "word",
+          "text": "delta",
+          "range": [
+            37,
+            42
+          ],
+          "ordinal": 4
+        }
+      ]
+    }
+  }
+}

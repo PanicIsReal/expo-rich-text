@@ -1,0 +1,325 @@
+{
+  "name": "streaming-fenced-code-block-tail",
+  "text": "```ts\nconst x = 1;\nconst y = 2;\n```",
+  "contentType": "markdown",
+  "animationMode": "glyph-reveal",
+  "expectedRenderedText": "const x = 1;\nconst y = 2;",
+  "document": {
+    "id": "doc-1ades7g",
+    "version": 1,
+    "source": {
+      "kind": "markdown",
+      "text": "```ts\nconst x = 1;\nconst y = 2;\n```"
+    },
+    "blocks": [
+      {
+        "id": "block-1i0fm44",
+        "kind": "code-block",
+        "range": [
+          0,
+          35
+        ],
+        "childSpanIds": [
+          "span-o8hhf4"
+        ],
+        "metadata": {
+          "fenceLanguage": "typescript"
+        }
+      }
+    ],
+    "spans": [
+      {
+        "id": "span-o8hhf4",
+        "blockId": "block-1i0fm44",
+        "kind": "code",
+        "text": "const x = 1;\nconst y = 2;",
+        "range": [
+          0,
+          35
+        ],
+        "styleKey": "code-block",
+        "animationGroupId": "anim-group-rsjwp4"
+      }
+    ],
+    "animationPlan": {
+      "mode": "glyph-reveal",
+      "units": [
+        {
+          "id": "anim-1o6769f",
+          "spanId": "span-o8hhf4",
+          "kind": "grapheme",
+          "text": "c",
+          "range": [
+            0,
+            1
+          ],
+          "ordinal": 0
+        },
+        {
+          "id": "anim-vgiuvo",
+          "spanId": "span-o8hhf4",
+          "kind": "grapheme",
+          "text": "o",
+          "range": [
+            1,
+            2
+          ],
+          "ordinal": 1
+        },
+        {
+          "id": "anim-2apscy",
+          "spanId": "span-o8hhf4",
+          "kind": "grapheme",
+          "text": "n",
+          "range": [
+            2,
+            3
+          ],
+          "ordinal": 2
+        },
+        {
+          "id": "anim-xtcghy",
+          "spanId": "span-o8hhf4",
+          "kind": "grapheme",
+          "text": "s",
+          "range": [
+            3,
+            4
+          ],
+          "ordinal": 3
+        },
+        {
+          "id": "anim-fvvf4m",
+          "spanId": "span-o8hhf4",
+          "kind": "grapheme",
+          "text": "t",
+          "range": [
+            4,
+            5
+          ],
+          "ordinal": 4
+        },
+        {
+          "id": "anim-1xuugut",
+          "spanId": "span-o8hhf4",
+          "kind": "grapheme",
+          "text": " ",
+          "range": [
+            5,
+            6
+          ],
+          "ordinal": 5
+        },
+        {
+          "id": "anim-swaews",
+          "spanId": "span-o8hhf4",
+          "kind": "grapheme",
+          "text": "x",
+          "range": [
+            6,
+            7
+          ],
+          "ordinal": 6
+        },
+        {
+          "id": "anim-8j1lxr",
+          "spanId": "span-o8hhf4",
+          "kind": "grapheme",
+          "text": " ",
+          "range": [
+            7,
+            8
+          ],
+          "ordinal": 7
+        },
+        {
+          "id": "anim-ljk4ut",
+          "spanId": "span-o8hhf4",
+          "kind": "grapheme",
+          "text": "=",
+          "range": [
+            8,
+            9
+          ],
+          "ordinal": 8
+        },
+        {
+          "id": "anim-mnf0ht",
+          "spanId": "span-o8hhf4",
+          "kind": "grapheme",
+          "text": " ",
+          "range": [
+            9,
+            10
+          ],
+          "ordinal": 9
+        },
+        {
+          "id": "anim-1fhietc",
+          "spanId": "span-o8hhf4",
+          "kind": "grapheme",
+          "text": "1",
+          "range": [
+            10,
+            11
+          ],
+          "ordinal": 10
+        },
+        {
+          "id": "anim-o4ps2x",
+          "spanId": "span-o8hhf4",
+          "kind": "grapheme",
+          "text": ";",
+          "range": [
+            11,
+            12
+          ],
+          "ordinal": 11
+        },
+        {
+          "id": "anim-13aasij",
+          "spanId": "span-o8hhf4",
+          "kind": "grapheme",
+          "text": "\n",
+          "range": [
+            12,
+            13
+          ],
+          "ordinal": 12
+        },
+        {
+          "id": "anim-ofrplf",
+          "spanId": "span-o8hhf4",
+          "kind": "grapheme",
+          "text": "c",
+          "range": [
+            13,
+            14
+          ],
+          "ordinal": 13
+        },
+        {
+          "id": "anim-s54s3y",
+          "spanId": "span-o8hhf4",
+          "kind": "grapheme",
+          "text": "o",
+          "range": [
+            14,
+            15
+          ],
+          "ordinal": 14
+        },
+        {
+          "id": "anim-1n765qe",
+          "spanId": "span-o8hhf4",
+          "kind": "grapheme",
+          "text": "n",
+          "range": [
+            15,
+            16
+          ],
+          "ordinal": 15
+        },
+        {
+          "id": "anim-bs34ek",
+          "spanId": "span-o8hhf4",
+          "kind": "grapheme",
+          "text": "s",
+          "range": [
+            16,
+            17
+          ],
+          "ordinal": 16
+        },
+        {
+          "id": "anim-1fvb586",
+          "spanId": "span-o8hhf4",
+          "kind": "grapheme",
+          "text": "t",
+          "range": [
+            17,
+            18
+          ],
+          "ordinal": 17
+        },
+        {
+          "id": "anim-1vnesuz",
+          "spanId": "span-o8hhf4",
+          "kind": "grapheme",
+          "text": " ",
+          "range": [
+            18,
+            19
+          ],
+          "ordinal": 18
+        },
+        {
+          "id": "anim-ctpigb",
+          "spanId": "span-o8hhf4",
+          "kind": "grapheme",
+          "text": "y",
+          "range": [
+            19,
+            20
+          ],
+          "ordinal": 19
+        },
+        {
+          "id": "anim-pznin4",
+          "spanId": "span-o8hhf4",
+          "kind": "grapheme",
+          "text": " ",
+          "range": [
+            20,
+            21
+          ],
+          "ordinal": 20
+        },
+        {
+          "id": "anim-1s60nfg",
+          "spanId": "span-o8hhf4",
+          "kind": "grapheme",
+          "text": "=",
+          "range": [
+            21,
+            22
+          ],
+          "ordinal": 21
+        },
+        {
+          "id": "anim-1t53lny",
+          "spanId": "span-o8hhf4",
+          "kind": "grapheme",
+          "text": " ",
+          "range": [
+            22,
+            23
+          ],
+          "ordinal": 22
+        },
+        {
+          "id": "anim-js34nv",
+          "spanId": "span-o8hhf4",
+          "kind": "grapheme",
+          "text": "2",
+          "range": [
+            23,
+            24
+          ],
+          "ordinal": 23
+        },
+        {
+          "id": "anim-1kma971",
+          "spanId": "span-o8hhf4",
+          "kind": "grapheme",
+          "text": ";",
+          "range": [
+            24,
+            25
+          ],
+          "ordinal": 24
+        }
+      ]
+    }
+  }
+}

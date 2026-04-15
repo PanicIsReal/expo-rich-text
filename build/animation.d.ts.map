@@ -1,0 +1,1 @@
+{"version":3,"file":"animation.d.ts","sourceRoot":"","sources":["../src/animation.ts"],"names":[],"mappings":"AAAA,OAAO,EACL,+BAA+B,IAAI,oCAAoC,EACvE,+BAA+B,IAAI,mCAAmC,EACtE,4BAA4B,IAAI,gCAAgC,GACjE,MAAM,gCAAgC,CAAC;AAExC,YAAY,EACV,mBAAmB,IAAI,uBAAuB,EAC9C,yBAAyB,IAAI,6BAA6B,EAC1D,qBAAqB,IAAI,yBAAyB,EAClD,yBAAyB,IAAI,6BAA6B,EAC1D,qBAAqB,IAAI,yBAAyB,GACnD,MAAM,gCAAgC,CAAC"}

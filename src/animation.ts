@@ -1,0 +1,13 @@
+export {
+  DEFAULT_TEXT_ANIMATION_SETTINGS as DEFAULT_RICH_TEXT_ANIMATION_SETTINGS,
+  resolveSplitTextAnimationPreset as resolveSplitRichTextAnimationPreset,
+  resolveTextAnimationSettings as resolveRichTextAnimationSettings,
+} from "./internal/animation-config.js";
+
+export type {
+  TextAnimationPreset as RichTextAnimationPreset,
+  TextAnimationRevealPreset as RichTextAnimationRevealPreset,
+  TextAnimationSettings as RichTextAnimationSettings,
+  TextAnimationShaderPreset as RichTextAnimationShaderPreset,
+  TextAnimationUnitMode as RichTextAnimationUnitMode,
+} from "./internal/animation-config.js";

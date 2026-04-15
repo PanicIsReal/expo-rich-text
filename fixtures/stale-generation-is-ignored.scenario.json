@@ -1,0 +1,57 @@
+{
+  "name": "stale-generation-is-ignored",
+  "settings": {
+    "animationMode": "glyph-reveal",
+    "isStreaming": true,
+    "revealUnitsPerStep": 1,
+    "revealIntervalMs": 96,
+    "fadeDurationMs": 0,
+    "fadeStartOpacity": 0.22,
+    "revealPreset": "fade-trail",
+    "shaderPreset": "none",
+    "shaderStrength": 1,
+    "cursorEnabled": false,
+    "cursorGlyph": "▍",
+    "tailLength": 4,
+    "smoothReveal": false,
+    "smoothNewLine": false
+  },
+  "steps": [
+    {
+      "action": "applyUpdate",
+      "now": 0,
+      "payload": "{\"version\":2,\"kind\":\"reset\",\"generation\":1,\"documentJson\":\"{\\\"id\\\":\\\"doc-1mr1k6f\\\",\\\"version\\\":1,\\\"source\\\":{\\\"kind\\\":\\\"plain\\\",\\\"text\\\":\\\"A\\\"},\\\"blocks\\\":[{\\\"id\\\":\\\"block-e8l4tf\\\",\\\"kind\\\":\\\"paragraph\\\",\\\"range\\\":[0,1],\\\"childSpanIds\\\":[\\\"span-9qx6wx\\\"]}],\\\"spans\\\":[{\\\"id\\\":\\\"span-9qx6wx\\\",\\\"blockId\\\":\\\"block-e8l4tf\\\",\\\"kind\\\":\\\"text\\\",\\\"text\\\":\\\"A\\\",\\\"range\\\":[0,1],\\\"styleKey\\\":\\\"body\\\",\\\"animationGroupId\\\":\\\"anim-group-v4seky\\\"}],\\\"animationPlan\\\":{\\\"mode\\\":\\\"glyph-reveal\\\",\\\"units\\\":[{\\\"id\\\":\\\"anim-1e9cahv\\\",\\\"spanId\\\":\\\"span-9qx6wx\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"A\\\",\\\"range\\\":[0,1],\\\"ordinal\\\":0}]}}\",\"isStreaming\":true}",
+      "expect": {
+        "visibleText": "A",
+        "revealedUnitCount": 1,
+        "playbackPhase": "settled",
+        "requiresRevealTimer": false,
+        "requiresVisualEffectTimer": false
+      }
+    },
+    {
+      "action": "applyUpdate",
+      "now": 0.1,
+      "payload": "{\"version\":2,\"kind\":\"replace\",\"generation\":2,\"preservedPrefixUtf16\":1,\"documentJson\":\"{\\\"id\\\":\\\"doc-1mr1k6f\\\",\\\"version\\\":1,\\\"source\\\":{\\\"kind\\\":\\\"plain\\\",\\\"text\\\":\\\"AB\\\"},\\\"blocks\\\":[{\\\"id\\\":\\\"block-e8l4tf\\\",\\\"kind\\\":\\\"paragraph\\\",\\\"range\\\":[0,2],\\\"childSpanIds\\\":[\\\"span-9qx6wx\\\"]}],\\\"spans\\\":[{\\\"id\\\":\\\"span-9qx6wx\\\",\\\"blockId\\\":\\\"block-e8l4tf\\\",\\\"kind\\\":\\\"text\\\",\\\"text\\\":\\\"AB\\\",\\\"range\\\":[0,2],\\\"styleKey\\\":\\\"body\\\",\\\"animationGroupId\\\":\\\"anim-group-v4seky\\\"}],\\\"animationPlan\\\":{\\\"mode\\\":\\\"glyph-reveal\\\",\\\"units\\\":[{\\\"id\\\":\\\"anim-1e9cahv\\\",\\\"spanId\\\":\\\"span-9qx6wx\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"A\\\",\\\"range\\\":[0,1],\\\"ordinal\\\":0},{\\\"id\\\":\\\"anim-empcdd\\\",\\\"spanId\\\":\\\"span-9qx6wx\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"B\\\",\\\"range\\\":[1,2],\\\"ordinal\\\":1}]}}\",\"isStreaming\":true}",
+      "expect": {
+        "visibleText": "A",
+        "revealedUnitCount": 1,
+        "playbackPhase": "revealing",
+        "requiresRevealTimer": true,
+        "requiresVisualEffectTimer": false
+      }
+    },
+    {
+      "action": "applyUpdate",
+      "now": 0.2,
+      "payload": "{\"version\":2,\"kind\":\"reset\",\"generation\":1,\"documentJson\":\"{\\\"id\\\":\\\"doc-1mr1k6f\\\",\\\"version\\\":1,\\\"source\\\":{\\\"kind\\\":\\\"plain\\\",\\\"text\\\":\\\"A\\\"},\\\"blocks\\\":[{\\\"id\\\":\\\"block-e8l4tf\\\",\\\"kind\\\":\\\"paragraph\\\",\\\"range\\\":[0,1],\\\"childSpanIds\\\":[\\\"span-9qx6wx\\\"]}],\\\"spans\\\":[{\\\"id\\\":\\\"span-9qx6wx\\\",\\\"blockId\\\":\\\"block-e8l4tf\\\",\\\"kind\\\":\\\"text\\\",\\\"text\\\":\\\"A\\\",\\\"range\\\":[0,1],\\\"styleKey\\\":\\\"body\\\",\\\"animationGroupId\\\":\\\"anim-group-v4seky\\\"}],\\\"animationPlan\\\":{\\\"mode\\\":\\\"glyph-reveal\\\",\\\"units\\\":[{\\\"id\\\":\\\"anim-1e9cahv\\\",\\\"spanId\\\":\\\"span-9qx6wx\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"A\\\",\\\"range\\\":[0,1],\\\"ordinal\\\":0}]}}\",\"isStreaming\":true}",
+      "expect": {
+        "visibleText": "A",
+        "revealedUnitCount": 1,
+        "playbackPhase": "revealing",
+        "requiresRevealTimer": true,
+        "requiresVisualEffectTimer": false
+      }
+    }
+  ]
+}

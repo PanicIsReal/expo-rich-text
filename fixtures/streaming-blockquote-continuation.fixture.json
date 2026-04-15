@@ -1,0 +1,289 @@
+{
+  "name": "streaming-blockquote-continuation",
+  "text": "> first line\n> second line",
+  "contentType": "markdown",
+  "animationMode": "glyph-reveal",
+  "expectedRenderedText": "▍ first line\n▍ second line",
+  "document": {
+    "id": "doc-1ades7g",
+    "version": 1,
+    "source": {
+      "kind": "markdown",
+      "text": "> first line\n> second line"
+    },
+    "blocks": [
+      {
+        "id": "block-1ph1twe",
+        "kind": "blockquote",
+        "range": [
+          0,
+          26
+        ],
+        "childSpanIds": [
+          "span-13xf91k"
+        ]
+      }
+    ],
+    "spans": [
+      {
+        "id": "span-13xf91k",
+        "blockId": "block-1ph1twe",
+        "kind": "text",
+        "text": "first line\nsecond line",
+        "range": [
+          0,
+          22
+        ],
+        "styleKey": "blockquote",
+        "animationGroupId": "anim-group-168mvr3"
+      }
+    ],
+    "animationPlan": {
+      "mode": "glyph-reveal",
+      "units": [
+        {
+          "id": "anim-nl09tc",
+          "spanId": "span-13xf91k",
+          "kind": "grapheme",
+          "text": "f",
+          "range": [
+            0,
+            1
+          ],
+          "ordinal": 0
+        },
+        {
+          "id": "anim-1cz493e",
+          "spanId": "span-13xf91k",
+          "kind": "grapheme",
+          "text": "i",
+          "range": [
+            1,
+            2
+          ],
+          "ordinal": 1
+        },
+        {
+          "id": "anim-yspq16",
+          "spanId": "span-13xf91k",
+          "kind": "grapheme",
+          "text": "r",
+          "range": [
+            2,
+            3
+          ],
+          "ordinal": 2
+        },
+        {
+          "id": "anim-1ormjwi",
+          "spanId": "span-13xf91k",
+          "kind": "grapheme",
+          "text": "s",
+          "range": [
+            3,
+            4
+          ],
+          "ordinal": 3
+        },
+        {
+          "id": "anim-1x4i40i",
+          "spanId": "span-13xf91k",
+          "kind": "grapheme",
+          "text": "t",
+          "range": [
+            4,
+            5
+          ],
+          "ordinal": 4
+        },
+        {
+          "id": "anim-14yt00p",
+          "spanId": "span-13xf91k",
+          "kind": "grapheme",
+          "text": " ",
+          "range": [
+            5,
+            6
+          ],
+          "ordinal": 5
+        },
+        {
+          "id": "anim-efoa58",
+          "spanId": "span-13xf91k",
+          "kind": "grapheme",
+          "text": "l",
+          "range": [
+            6,
+            7
+          ],
+          "ordinal": 6
+        },
+        {
+          "id": "anim-yuqujc",
+          "spanId": "span-13xf91k",
+          "kind": "grapheme",
+          "text": "i",
+          "range": [
+            7,
+            8
+          ],
+          "ordinal": 7
+        },
+        {
+          "id": "anim-1vn0lio",
+          "spanId": "span-13xf91k",
+          "kind": "grapheme",
+          "text": "n",
+          "range": [
+            8,
+            9
+          ],
+          "ordinal": 8
+        },
+        {
+          "id": "anim-lkt8u6",
+          "spanId": "span-13xf91k",
+          "kind": "grapheme",
+          "text": "e",
+          "range": [
+            9,
+            10
+          ],
+          "ordinal": 9
+        },
+        {
+          "id": "anim-1mvulet",
+          "spanId": "span-13xf91k",
+          "kind": "grapheme",
+          "text": "\n",
+          "range": [
+            10,
+            11
+          ],
+          "ordinal": 10
+        },
+        {
+          "id": "anim-13kqfsl",
+          "spanId": "span-13xf91k",
+          "kind": "grapheme",
+          "text": "s",
+          "range": [
+            11,
+            12
+          ],
+          "ordinal": 11
+        },
+        {
+          "id": "anim-1mc6a8u",
+          "spanId": "span-13xf91k",
+          "kind": "grapheme",
+          "text": "e",
+          "range": [
+            12,
+            13
+          ],
+          "ordinal": 12
+        },
+        {
+          "id": "anim-11nvjrb",
+          "spanId": "span-13xf91k",
+          "kind": "grapheme",
+          "text": "c",
+          "range": [
+            13,
+            14
+          ],
+          "ordinal": 13
+        },
+        {
+          "id": "anim-19gj7v6",
+          "spanId": "span-13xf91k",
+          "kind": "grapheme",
+          "text": "o",
+          "range": [
+            14,
+            15
+          ],
+          "ordinal": 14
+        },
+        {
+          "id": "anim-ed3tpm",
+          "spanId": "span-13xf91k",
+          "kind": "grapheme",
+          "text": "n",
+          "range": [
+            15,
+            16
+          ],
+          "ordinal": 15
+        },
+        {
+          "id": "anim-11p3125",
+          "spanId": "span-13xf91k",
+          "kind": "grapheme",
+          "text": "d",
+          "range": [
+            16,
+            17
+          ],
+          "ordinal": 16
+        },
+        {
+          "id": "anim-wk61f2",
+          "spanId": "span-13xf91k",
+          "kind": "grapheme",
+          "text": " ",
+          "range": [
+            17,
+            18
+          ],
+          "ordinal": 17
+        },
+        {
+          "id": "anim-nkpmi3",
+          "spanId": "span-13xf91k",
+          "kind": "grapheme",
+          "text": "l",
+          "range": [
+            18,
+            19
+          ],
+          "ordinal": 18
+        },
+        {
+          "id": "anim-35n23z",
+          "spanId": "span-13xf91k",
+          "kind": "grapheme",
+          "text": "i",
+          "range": [
+            19,
+            20
+          ],
+          "ordinal": 19
+        },
+        {
+          "id": "anim-1qddxme",
+          "spanId": "span-13xf91k",
+          "kind": "grapheme",
+          "text": "n",
+          "range": [
+            20,
+            21
+          ],
+          "ordinal": 20
+        },
+        {
+          "id": "anim-a3etvk",
+          "spanId": "span-13xf91k",
+          "kind": "grapheme",
+          "text": "e",
+          "range": [
+            21,
+            22
+          ],
+          "ordinal": 21
+        }
+      ]
+    }
+  }
+}

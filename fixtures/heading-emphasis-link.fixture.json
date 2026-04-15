@@ -1,0 +1,154 @@
+{
+  "name": "heading-emphasis-link",
+  "text": "# Title with **bold** and [link](https://example.com)",
+  "contentType": "markdown",
+  "animationMode": "word-reveal",
+  "expectedRenderedText": "Title with bold and link",
+  "document": {
+    "id": "doc-1ades7g",
+    "version": 1,
+    "source": {
+      "kind": "markdown",
+      "text": "# Title with **bold** and [link](https://example.com)"
+    },
+    "blocks": [
+      {
+        "id": "block-1kg0xo5",
+        "kind": "heading",
+        "level": 1,
+        "range": [
+          0,
+          53
+        ],
+        "childSpanIds": [
+          "span-1jl2lpr",
+          "span-1mkaasq",
+          "span-1lxn8k1",
+          "span-l8dbed"
+        ]
+      }
+    ],
+    "spans": [
+      {
+        "id": "span-1jl2lpr",
+        "blockId": "block-1kg0xo5",
+        "kind": "text",
+        "text": "Title with ",
+        "range": [
+          0,
+          11
+        ],
+        "styleKey": "heading-1",
+        "animationGroupId": "anim-group-15bw7n8"
+      },
+      {
+        "id": "span-1mkaasq",
+        "blockId": "block-1kg0xo5",
+        "kind": "strong",
+        "text": "bold",
+        "range": [
+          11,
+          19
+        ],
+        "styleKey": "heading-1-strong",
+        "animationGroupId": "anim-group-1w3xchm"
+      },
+      {
+        "id": "span-1lxn8k1",
+        "blockId": "block-1kg0xo5",
+        "kind": "text",
+        "text": " and ",
+        "range": [
+          19,
+          24
+        ],
+        "styleKey": "heading-1",
+        "animationGroupId": "anim-group-102ydrm"
+      },
+      {
+        "id": "span-l8dbed",
+        "blockId": "block-1kg0xo5",
+        "kind": "link",
+        "text": "link",
+        "range": [
+          24,
+          51
+        ],
+        "href": "https://example.com",
+        "styleKey": "heading-1-link",
+        "animationGroupId": "anim-group-b8082i"
+      }
+    ],
+    "animationPlan": {
+      "mode": "word-reveal",
+      "units": [
+        {
+          "id": "anim-548dr7",
+          "spanId": "span-1jl2lpr",
+          "kind": "word",
+          "text": "Title ",
+          "range": [
+            0,
+            6
+          ],
+          "ordinal": 0
+        },
+        {
+          "id": "anim-156dc2h",
+          "spanId": "span-1jl2lpr",
+          "kind": "word",
+          "text": "with ",
+          "range": [
+            6,
+            11
+          ],
+          "ordinal": 1
+        },
+        {
+          "id": "anim-r960gm",
+          "spanId": "span-1mkaasq",
+          "kind": "word",
+          "text": "bold",
+          "range": [
+            11,
+            15
+          ],
+          "ordinal": 2
+        },
+        {
+          "id": "anim-1bs4tqr",
+          "spanId": "span-1lxn8k1",
+          "kind": "word",
+          "text": " ",
+          "range": [
+            19,
+            20
+          ],
+          "ordinal": 3
+        },
+        {
+          "id": "anim-1hdivri",
+          "spanId": "span-1lxn8k1",
+          "kind": "word",
+          "text": "and ",
+          "range": [
+            20,
+            24
+          ],
+          "ordinal": 4
+        },
+        {
+          "id": "anim-59ouhr",
+          "spanId": "span-l8dbed",
+          "kind": "word",
+          "text": "link",
+          "range": [
+            24,
+            28
+          ],
+          "ordinal": 5
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,2 @@
+export { DEFAULT_TEXT_ANIMATION_SETTINGS as DEFAULT_RICH_TEXT_ANIMATION_SETTINGS, resolveSplitTextAnimationPreset as resolveSplitRichTextAnimationPreset, resolveTextAnimationSettings as resolveRichTextAnimationSettings, } from "./internal/animation-config.js";
+//# sourceMappingURL=animation.js.map

@@ -1,0 +1,88 @@
+{
+  "name": "expo-rich-text",
+  "version": "0.1.0",
+  "description": "SwiftUI-backed rich text view and animation engine for Expo on iOS.",
+  "type": "module",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./build/index.d.ts",
+      "default": "./build/index.js"
+    },
+    "./animation": {
+      "types": "./build/animation.d.ts",
+      "default": "./build/animation.js"
+    },
+    "./engine": {
+      "types": "./build/engine.d.ts",
+      "default": "./build/engine.js"
+    },
+    "./preview": {
+      "types": "./build/preview.d.ts",
+      "default": "./build/preview.js"
+    },
+    "./fixtures/generate-fixtures": {
+      "default": "./scripts/generate-fixtures.ts"
+    },
+    "./fixtures/cases": {
+      "default": "./scripts/fixture-cases.ts"
+    },
+    "./internal/*": {
+      "types": "./build/internal/*.d.ts",
+      "default": "./build/internal/*.js"
+    },
+    "./fixtures/*": "./fixtures/*"
+  },
+  "files": [
+    "build",
+    "fixtures",
+    "ios",
+    "scripts",
+    "CHANGELOG.md",
+    "README.md",
+    "expo-module.config.json"
+  ],
+  "scripts": {
+    "build": "expo-module build",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "test": "expo-module test --passWithNoTests",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "expo-module": "expo-module"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "expo-rich-text",
+    "ExpoRichText"
+  ],
+  "repository": "https://github.com/PanicIsReal/expo-rich-text",
+  "bugs": {
+    "url": "https://github.com/PanicIsReal/expo-rich-text/issues"
+  },
+  "author": "PanicIsReal <3466546+PanicIsReal@users.noreply.github.com> (https://github.com/PanicIsReal)",
+  "license": "MIT",
+  "homepage": "https://github.com/PanicIsReal/expo-rich-text#readme",
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@expo/ui": "~55.0.11",
+    "@types/node": "^24.5.2",
+    "@types/react": "~19.2.2",
+    "expo": "~55.0.15",
+    "expo-module-scripts": "^55.0.2",
+    "react": "19.2.0",
+    "react-native": "0.83.4"
+  },
+  "peerDependencies": {
+    "@expo/ui": "~55.0.11",
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "name": "repeated-snapshots-are-stable-without-state-changes",
+  "settings": {
+    "animationMode": "static",
+    "isStreaming": false,
+    "revealUnitsPerStep": 1,
+    "revealIntervalMs": 96,
+    "fadeDurationMs": 0,
+    "fadeStartOpacity": 0.22,
+    "revealPreset": "fade-trail",
+    "shaderPreset": "none",
+    "shaderStrength": 1,
+    "cursorEnabled": false,
+    "cursorGlyph": "▍",
+    "tailLength": 4,
+    "smoothReveal": false,
+    "smoothNewLine": false
+  },
+  "steps": [
+    {
+      "action": "applyDocument",
+      "now": 0,
+      "payload": "{\"id\":\"doc-1mr1k6f\",\"version\":1,\"source\":{\"kind\":\"plain\",\"text\":\"Stable\"},\"blocks\":[{\"id\":\"block-e8l4tf\",\"kind\":\"paragraph\",\"range\":[0,6],\"childSpanIds\":[\"span-9qx6wx\"]}],\"spans\":[{\"id\":\"span-9qx6wx\",\"blockId\":\"block-e8l4tf\",\"kind\":\"text\",\"text\":\"Stable\",\"range\":[0,6],\"styleKey\":\"body\",\"animationGroupId\":\"anim-group-v4seky\"}],\"animationPlan\":{\"mode\":\"static\",\"units\":[]}}",
+      "expect": {
+        "visibleText": "Stable",
+        "revealedUnitCount": 0,
+        "playbackPhase": "settled",
+        "requiresRevealTimer": false,
+        "requiresVisualEffectTimer": false
+      }
+    },
+    {
+      "action": "tick",
+      "now": 0.1,
+      "expect": {
+        "visibleText": "Stable",
+        "revealedUnitCount": 0,
+        "playbackPhase": "settled",
+        "requiresRevealTimer": false,
+        "requiresVisualEffectTimer": false
+      }
+    }
+  ]
+}

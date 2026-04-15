@@ -1,0 +1,45 @@
+{
+  "name": "invalid-append-boundary-is-rejected",
+  "settings": {
+    "animationMode": "glyph-reveal",
+    "isStreaming": true,
+    "revealUnitsPerStep": 1,
+    "revealIntervalMs": 96,
+    "fadeDurationMs": 0,
+    "fadeStartOpacity": 0.22,
+    "revealPreset": "fade-trail",
+    "shaderPreset": "none",
+    "shaderStrength": 1,
+    "cursorEnabled": false,
+    "cursorGlyph": "▍",
+    "tailLength": 4,
+    "smoothReveal": false,
+    "smoothNewLine": false
+  },
+  "steps": [
+    {
+      "action": "applyUpdate",
+      "now": 0,
+      "payload": "{\"version\":2,\"kind\":\"reset\",\"generation\":1,\"documentJson\":\"{\\\"id\\\":\\\"doc-1ades7g\\\",\\\"version\\\":1,\\\"source\\\":{\\\"kind\\\":\\\"markdown\\\",\\\"text\\\":\\\"A\\\"},\\\"blocks\\\":[{\\\"id\\\":\\\"block-2yaxsp\\\",\\\"kind\\\":\\\"paragraph\\\",\\\"range\\\":[0,1],\\\"childSpanIds\\\":[\\\"span-a45vcb\\\"]}],\\\"spans\\\":[{\\\"id\\\":\\\"span-a45vcb\\\",\\\"blockId\\\":\\\"block-2yaxsp\\\",\\\"kind\\\":\\\"text\\\",\\\"text\\\":\\\"A\\\",\\\"range\\\":[0,1],\\\"styleKey\\\":\\\"body\\\",\\\"animationGroupId\\\":\\\"anim-group-1hju9up\\\"}],\\\"animationPlan\\\":{\\\"mode\\\":\\\"glyph-reveal\\\",\\\"units\\\":[{\\\"id\\\":\\\"anim-1d5mnyb\\\",\\\"spanId\\\":\\\"span-a45vcb\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"A\\\",\\\"range\\\":[0,1],\\\"ordinal\\\":0}]}}\",\"isStreaming\":true}",
+      "expect": {
+        "visibleText": "A",
+        "revealedUnitCount": 1,
+        "playbackPhase": "settled",
+        "requiresRevealTimer": false,
+        "requiresVisualEffectTimer": false
+      }
+    },
+    {
+      "action": "applyUpdate",
+      "now": 0.1,
+      "payload": "{\"version\":2,\"kind\":\"append\",\"generation\":2,\"appendFromUtf16\":999,\"appendedText\":\"\\n\\nB\",\"appendedBlocksJson\":\"[{\\\"id\\\":\\\"block-171iymb\\\",\\\"kind\\\":\\\"paragraph\\\",\\\"range\\\":[3,4],\\\"childSpanIds\\\":[\\\"span-1dkhdbz\\\"]}]\",\"appendedSpansJson\":\"[{\\\"id\\\":\\\"span-1dkhdbz\\\",\\\"blockId\\\":\\\"block-171iymb\\\",\\\"kind\\\":\\\"text\\\",\\\"text\\\":\\\"B\\\",\\\"range\\\":[3,4],\\\"styleKey\\\":\\\"body\\\",\\\"animationGroupId\\\":\\\"anim-group-1kgsxt8\\\"}]\",\"appendedUnitsJson\":\"[{\\\"id\\\":\\\"anim-lbcwix\\\",\\\"spanId\\\":\\\"span-1dkhdbz\\\",\\\"kind\\\":\\\"grapheme\\\",\\\"text\\\":\\\"B\\\",\\\"range\\\":[3,4],\\\"ordinal\\\":1}]\",\"isStreaming\":true}",
+      "expect": {
+        "visibleText": "A",
+        "revealedUnitCount": 1,
+        "playbackPhase": "settled",
+        "requiresRevealTimer": false,
+        "requiresVisualEffectTimer": false
+      }
+    }
+  ]
+}
