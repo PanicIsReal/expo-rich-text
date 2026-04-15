@@ -11,7 +11,7 @@ A SwiftUI-backed Expo module that renders and animates rich text on iOS. Pairs a
   bare user-attachments URLs as an inline <video> player.
 -->
 
-https://github.com/user-attachments/assets/REPLACE-WITH-UPLOADED-VIDEO-UUID
+[Example Video](https://streamable.com/k1fwet)
 
 | iOS | Android | Web |
 | :---: | :---: | :---: |
