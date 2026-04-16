@@ -174,20 +174,17 @@ final class RichTextRenderSession {
     theme = nextTheme
     settings = nextSettings
 
-    if previousSettings.animationMode != nextSettings.animationMode {
-      recalculateRevealState(resetProgress: false, now: now)
-    } else if previousSettings.isStreaming != nextSettings.isStreaming {
-      let totalUnits = document.animationPlan.units.count
-      let shouldRestartReveal =
-        nextSettings.isStreaming &&
-        nextSettings.animationMode != "static" &&
-        totalUnits > 0 &&
-        revealedUnitCount >= totalUnits
-      recalculateRevealState(resetProgress: shouldRestartReveal, now: now)
-    } else if previousSettings.revealUnitsPerStep != nextSettings.revealUnitsPerStep {
+    // Reveal progress is only ever reset through itemId change (which flows
+    // through `resetForNewItem`) or through `applyReset` when the new document
+    // text is not a prefix extension of the current one. Settings transitions
+    // — including isStreaming flipping back to true mid-stream — must preserve
+    // the current reveal position so a transient prop oscillation cannot wipe
+    // the animation back to zero halfway through a response.
+    if previousSettings.animationMode != nextSettings.animationMode
+      || previousSettings.isStreaming != nextSettings.isStreaming
+      || previousSettings.revealUnitsPerStep != nextSettings.revealUnitsPerStep {
       recalculateRevealState(resetProgress: false, now: now)
     }
-
   }
 
   func tick(now: CFTimeInterval) {
