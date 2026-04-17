@@ -58,3 +58,6 @@ yarn-error.log
 # Firebase
 firebase-debug.log
 firebase-debug.*.log
+
+# Local agent tooling
+.pi/

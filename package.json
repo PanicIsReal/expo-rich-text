@@ -1,6 +1,6 @@
 {
   "name": "expo-rich-text",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "SwiftUI-backed rich text view and animation engine for Expo on iOS.",
   "type": "module",
   "main": "build/index.js",

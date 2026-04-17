@@ -49,6 +49,20 @@ private struct RichTextHostedSnapshot: Equatable {
   var lineSpacing: CGFloat = 0
   var textColor = UIColor.label
   var effectColor = UIColor.label
+  // When true, RichTextHostedRootView fades in each newly-wrapped line as a
+  // group via an Animatable TextRenderer. Existing lines keep their natural
+  // positions at full opacity, so they stay perfectly still while the new
+  // line appears. The hosted view still reports natural content height to
+  // Yoga every frame, letting the RN bubble animate its own height with
+  // overflow-hidden to crop content that has not yet been revealed.
+  var smoothNewLine = false
+}
+
+private struct RichTextNaturalContentHeightKey: PreferenceKey {
+  static var defaultValue: CGFloat = 0
+  static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+    value = max(value, nextValue())
+  }
 }
 
 private struct RichTextHostedTextSegment: Equatable {
@@ -63,16 +77,86 @@ private struct RichTextFadeOpacityAttribute: AttributedStringKey, TextAttribute 
   let opacity: Double
 }
 
-private struct RichTextFadeTextRenderer: TextRenderer {
+private struct RichTextFadeTextRenderer: TextRenderer, Animatable {
+  // Per-run fade (existing behavior — carries RichTextFadeOpacityAttribute).
+  // Per-line fade (new) — lines whose bottom edge sits below
+  // `lineFadeThresholdY` are considered just-wrapped and fade from 0 → 1 as
+  // `lineFadeElapsed` animates up to `lineFadeDuration`. SwiftUI interpolates
+  // `lineFadeElapsed` via `animatableData`, so the renderer is rebuilt each
+  // frame with an intermediate value while the spring runs.
+  var lineFadeElapsed: TimeInterval = 0
+  var lineFadeDuration: TimeInterval = 0.32
+  var lineFadeThresholdY: CGFloat = 0
+  var lineFadeEnabled: Bool = false
+
+  var animatableData: Double {
+    get { lineFadeElapsed }
+    set { lineFadeElapsed = newValue }
+  }
+
   func draw(layout: Text.Layout, in ctx: inout GraphicsContext) {
+    let fadeActive = lineFadeEnabled && lineFadeThresholdY > 0.5
+    let fadeOpacity: Double = {
+      guard fadeActive, lineFadeDuration > 0 else { return 1 }
+      let progress = min(max(lineFadeElapsed / lineFadeDuration, 0), 1)
+      return 1 - pow(1 - progress, 3)
+    }()
+
     for line in layout {
-      for run in line {
-        var runContext = ctx
-        if let fade = run[RichTextFadeOpacityAttribute.self] {
-          runContext.opacity *= fade.opacity
-        }
-        runContext.draw(run)
+      let lineBottom = line.typographicBounds.rect.maxY
+      let isNewLine =
+        fadeActive && lineBottom > lineFadeThresholdY + 0.5 && fadeOpacity < 0.999
+
+      if isNewLine {
+        var lineCtx = ctx
+        lineCtx.opacity *= fadeOpacity
+        drawRuns(in: line, using: &lineCtx)
+      } else {
+        drawRuns(in: line, using: &ctx)
       }
+    }
+  }
+
+  private func drawRuns(in line: Text.Layout.Line, using ctx: inout GraphicsContext) {
+    for run in line {
+      // Skip the GraphicsContext copy for fully-opaque runs — the tail of an
+      // agent message is mostly opaque, and a per-run context copy per frame
+      // is the dominant cost during long fade-trail renders.
+      if let fade = run[RichTextFadeOpacityAttribute.self], fade.opacity < 0.999 {
+        var runContext = ctx
+        runContext.opacity *= fade.opacity
+        runContext.draw(run)
+      } else {
+        ctx.draw(run)
+      }
+    }
+  }
+}
+
+private struct RichTextSegmentFingerprint: Equatable {
+  let itemId: String
+  let documentJson: String
+  let updateJson: String
+  let visibleUnitCount: Int
+  let shaderPreset: String
+  let activeOverlayOrdinals: Set<Int>
+  let hiddenUnitOrdinals: Set<Int>
+  let cursorActive: Bool
+  let cursorGlyph: String
+  let omitsForegroundColor: Bool
+}
+
+private final class RichTextDisplayLinkProxy: NSObject {
+  weak var owner: RichTextCoordinator?
+
+  init(owner: RichTextCoordinator) {
+    self.owner = owner
+    super.init()
+  }
+
+  @objc func handleDisplayLink(_ link: CADisplayLink) {
+    MainActor.assumeIsolated {
+      owner?.handleDisplayLinkTick()
     }
   }
 }
@@ -201,10 +285,16 @@ private final class RichTextCoordinator: ObservableObject {
   private var currentSnapshot: RichTextRenderSnapshot?
   private var shaderAnimationStartTime: CFTimeInterval?
 
-  private var revealTimer: Timer?
-  private var revealTimerInterval: TimeInterval?
-  private var visualEffectTimer: Timer?
-  private let visualEffectTimerInterval: TimeInterval = 1.0 / 30.0
+  private var displayLink: CADisplayLink?
+  private var displayLinkProxy: RichTextDisplayLinkProxy?
+  private var needsRevealTicks = false
+  private var revealIntervalSeconds: TimeInterval = 0
+  private var lastRevealTickTime: CFTimeInterval = 0
+  private var needsVisualRefresh = false
+
+  private var cachedTextSegments: [RichTextHostedTextSegment] = []
+  private var cachedOverlaySegments: [RichTextHostedTextSegment] = []
+  private var lastSegmentFingerprint: RichTextSegmentFingerprint?
 
   private var lastEmittedVisibleCharacterCount = -1
   private var lastEmittedRevealActive: Bool?
@@ -229,7 +319,10 @@ private final class RichTextCoordinator: ObservableObject {
   func detach() {
     isVisible = false
     props = nil
-    invalidateTimers()
+    stopDisplayLink()
+    cachedTextSegments.removeAll(keepingCapacity: false)
+    cachedOverlaySegments.removeAll(keepingCapacity: false)
+    lastSegmentFingerprint = nil
   }
 
   func apply(configuration: RichTextResolvedConfiguration, props: ExpoRichTextProps) {
@@ -368,28 +461,65 @@ private final class RichTextCoordinator: ObservableObject {
     let omitsForegroundColor =
       shaderPreset == .shaderCRT || shaderPreset == .shaderNoise
 
-    let textSegments = RichTextSwiftUIAttributedStringBuilder.buildDocument(
-      document: snapshot.document,
-      theme: currentTheme,
-      renderState: renderState,
-      inlineCursor: resolvedInlineCursor(
-        snapshot: snapshot,
-        theme: currentTheme,
-        accentColor: activeCursorColor()
-      ),
+    let cursorActive =
+      snapshot.shouldShowInlineCursor || snapshot.shouldShowSmoothCursorLayer
+    let fingerprint = RichTextSegmentFingerprint(
+      itemId: currentItemId,
+      documentJson: documentJson,
+      updateJson: updateJson,
+      visibleUnitCount: renderState?.visibleUnitCount ?? -1,
+      shaderPreset: shaderPreset.rawValue,
+      activeOverlayOrdinals: snapshot.activeOverlayUnitOrdinals,
+      hiddenUnitOrdinals: renderState?.hiddenUnitOrdinals ?? [],
+      cursorActive: cursorActive,
+      cursorGlyph: cursorGlyph,
       omitsForegroundColor: omitsForegroundColor
     )
-    let overlaySegments =
-      snapshot.activeOverlayUnitOrdinals.isEmpty
-        ? []
-        : RichTextSwiftUIAttributedStringBuilder.buildDocument(
-          document: snapshot.document,
+
+    let canCache = canCacheSegments(snapshot: snapshot)
+    let textSegments: [RichTextHostedTextSegment]
+    let overlaySegments: [RichTextHostedTextSegment]
+
+    if !forceLayout,
+      canCache,
+      let lastFingerprint = lastSegmentFingerprint,
+      lastFingerprint == fingerprint
+    {
+      textSegments = cachedTextSegments
+      overlaySegments = cachedOverlaySegments
+    } else {
+      textSegments = RichTextSwiftUIAttributedStringBuilder.buildDocument(
+        document: snapshot.document,
+        theme: currentTheme,
+        renderState: renderState,
+        inlineCursor: resolvedInlineCursor(
+          snapshot: snapshot,
           theme: currentTheme,
-          renderState: renderState,
-          inlineCursor: nil,
-          omitsForegroundColor: false,
-          visibleUnitOrdinals: snapshot.activeOverlayUnitOrdinals
-        )
+          accentColor: activeCursorColor()
+        ),
+        omitsForegroundColor: omitsForegroundColor
+      )
+      overlaySegments =
+        snapshot.activeOverlayUnitOrdinals.isEmpty
+          ? []
+          : RichTextSwiftUIAttributedStringBuilder.buildDocument(
+            document: snapshot.document,
+            theme: currentTheme,
+            renderState: renderState,
+            inlineCursor: nil,
+            omitsForegroundColor: false,
+            visibleUnitOrdinals: snapshot.activeOverlayUnitOrdinals
+          )
+      if canCache {
+        cachedTextSegments = textSegments
+        cachedOverlaySegments = overlaySegments
+        lastSegmentFingerprint = fingerprint
+      } else if lastSegmentFingerprint != nil {
+        cachedTextSegments.removeAll(keepingCapacity: true)
+        cachedOverlaySegments.removeAll(keepingCapacity: true)
+        lastSegmentFingerprint = nil
+      }
+    }
 
     let shaderTime = resolvedShaderTime(now: now)
     let bodyFont = RichTextAttributedStringBuilder.resolveFont(
@@ -409,7 +539,8 @@ private final class RichTextCoordinator: ObservableObject {
       shaderTime: shaderTime,
       lineSpacing: lineSpacing,
       textColor: currentTheme.textColor,
-      effectColor: effectColor ?? activeCursorColor()
+      effectColor: effectColor ?? activeCursorColor(),
+      smoothNewLine: smoothNewLine
     )
     if hostedSnapshot != nextHostedSnapshot {
       hostedSnapshot = nextHostedSnapshot
@@ -417,7 +548,19 @@ private final class RichTextCoordinator: ObservableObject {
 
     currentSnapshot = snapshot
     emitSnapshot(snapshot)
-    updateTimers(for: snapshot)
+    updateAnimationLoop(for: snapshot)
+  }
+
+  private func canCacheSegments(snapshot: RichTextRenderSnapshot) -> Bool {
+    if snapshot.revealActive { return false }
+    switch shaderPreset {
+    case .ember, .matrix, .neon, .ghost:
+      return false
+    case .smoke, .disintegrate:
+      return snapshot.activeOverlayUnitOrdinals.isEmpty
+    case .none, .shaderGlow, .shaderWave, .shaderCRT, .shaderNoise:
+      return true
+    }
   }
 
   private func resolvedInlineCursor(
@@ -474,93 +617,87 @@ private final class RichTextCoordinator: ObservableObject {
     }
   }
 
-  private func updateTimers(for snapshot: RichTextRenderSnapshot) {
+  private func updateAnimationLoop(for snapshot: RichTextRenderSnapshot) {
     guard isVisible else {
-      invalidateTimers()
+      stopDisplayLink()
       return
     }
 
-    if let interval = snapshot.revealTimerInterval {
-      ensureRevealTimer(interval: interval)
-    } else {
-      stopRevealTimer()
-    }
+    let nextRevealIntervalSeconds = snapshot.revealTimerInterval ?? 0
+    let nextNeedsRevealTicks = nextRevealIntervalSeconds > 0
+    let nextNeedsVisualRefresh =
+      snapshot.requiresVisualEffectTimer || shaderPreset.usesContinuousTimeline
 
-    if snapshot.requiresVisualEffectTimer || shaderPreset.usesContinuousTimeline {
-      ensureVisualEffectTimer()
+    if nextNeedsRevealTicks {
+      let intervalChanged =
+        abs(revealIntervalSeconds - nextRevealIntervalSeconds) > 0.0001
+      if !needsRevealTicks || intervalChanged {
+        lastRevealTickTime = CACurrentMediaTime()
+      }
+      revealIntervalSeconds = nextRevealIntervalSeconds
     } else {
-      stopVisualEffectTimer()
+      revealIntervalSeconds = 0
+    }
+    needsRevealTicks = nextNeedsRevealTicks
+    needsVisualRefresh = nextNeedsVisualRefresh
+
+    if needsRevealTicks || needsVisualRefresh {
+      ensureDisplayLink()
+    } else {
+      stopDisplayLink()
     }
   }
 
-  private func ensureRevealTimer(interval: TimeInterval) {
-    if revealTimer != nil, let revealTimerInterval, abs(revealTimerInterval - interval) <= 0.0001 {
+  private func ensureDisplayLink() {
+    if displayLink != nil { return }
+
+    let proxy = RichTextDisplayLinkProxy(owner: self)
+    let link = CADisplayLink(
+      target: proxy,
+      selector: #selector(RichTextDisplayLinkProxy.handleDisplayLink(_:))
+    )
+    link.preferredFrameRateRange = CAFrameRateRange(
+      minimum: 30,
+      maximum: 120,
+      preferred: 60
+    )
+    link.add(to: .main, forMode: .common)
+    displayLink = link
+    displayLinkProxy = proxy
+  }
+
+  private func stopDisplayLink() {
+    displayLink?.invalidate()
+    displayLink = nil
+    displayLinkProxy = nil
+    needsRevealTicks = false
+    needsVisualRefresh = false
+    lastRevealTickTime = 0
+    revealIntervalSeconds = 0
+  }
+
+  func handleDisplayLinkTick() {
+    guard isVisible, props != nil else {
+      stopDisplayLink()
       return
     }
 
-    stopRevealTimer()
+    let now = CACurrentMediaTime()
+    var didRevealTick = false
 
-    let timer = Timer(timeInterval: interval, repeats: true) { [weak self] timer in
-      Task { @MainActor [weak self] in
-        guard let self else {
-          timer.invalidate()
-          return
-        }
-        guard self.isVisible, self.props != nil else {
-          timer.invalidate()
-          self.stopRevealTimer()
-          return
-        }
-
-        let now = CACurrentMediaTime()
-        self.rendererCore.tick(now: now)
-        self.render(now: now, forceLayout: false)
+    if needsRevealTicks, revealIntervalSeconds > 0 {
+      let elapsed = now - lastRevealTickTime
+      if elapsed >= revealIntervalSeconds {
+        rendererCore.tick(now: now)
+        lastRevealTickTime = now
+        render(now: now, forceLayout: false)
+        didRevealTick = true
       }
     }
-    revealTimer = timer
-    revealTimerInterval = interval
-    RunLoop.main.add(timer, forMode: .common)
-  }
 
-  private func stopRevealTimer() {
-    revealTimer?.invalidate()
-    revealTimer = nil
-    revealTimerInterval = nil
-  }
-
-  private func ensureVisualEffectTimer() {
-    if visualEffectTimer != nil {
-      return
+    if !didRevealTick, needsVisualRefresh {
+      render(now: now, forceLayout: false)
     }
-
-    let timer = Timer(timeInterval: visualEffectTimerInterval, repeats: true) { [weak self] timer in
-      Task { @MainActor [weak self] in
-        guard let self else {
-          timer.invalidate()
-          return
-        }
-        guard self.isVisible, self.props != nil else {
-          timer.invalidate()
-          self.stopVisualEffectTimer()
-          return
-        }
-
-        let now = CACurrentMediaTime()
-        self.render(now: now, forceLayout: false)
-      }
-    }
-    visualEffectTimer = timer
-    RunLoop.main.add(timer, forMode: .common)
-  }
-
-  private func stopVisualEffectTimer() {
-    visualEffectTimer?.invalidate()
-    visualEffectTimer = nil
-  }
-
-  private func invalidateTimers() {
-    stopRevealTimer()
-    stopVisualEffectTimer()
   }
 
   private func resetEmittedSnapshotState() {
@@ -725,6 +862,20 @@ private struct RichTextHostedRootView: View {
   let snapshot: RichTextHostedSnapshot
   let onOpenURL: (URL) -> Void
 
+  // smoothNewLine driver. The natural content height is measured each frame
+  // via a GeometryReader preference behind the fixed-size content. Whenever
+  // it grows, we capture the old height as `lineFadeThresholdY` (the y-line
+  // that separates "already there" lines from just-wrapped lines) and
+  // easeOut `lineFadeElapsed` to the fade duration. SwiftUI interpolates
+  // the TextRenderer via Animatable, so the new line fades in as a group
+  // instead of revealing progressively from a clip that trims letters.
+  @State private var previousContentHeight: CGFloat = 0
+  @State private var hasSeededHeight = false
+  @State private var lineFadeElapsed: TimeInterval = 0
+  @State private var lineFadeThresholdY: CGFloat = 0
+
+  private static let smoothNewLineDuration: TimeInterval = 0.32
+
   private var shaderSourcePadding: EdgeInsets {
     switch snapshot.shaderPreset {
     case "shader-glow":
@@ -741,18 +892,70 @@ private struct RichTextHostedRootView: View {
     }
   }
 
+  @ViewBuilder
   var body: some View {
     let openURLAction = OpenURLAction { url in
       onOpenURL(url)
       return .handled
     }
 
-    return RichTextWidthFittingLayout {
+    RichTextWidthFittingLayout {
       content
         .environment(\.openURL, openURLAction)
+        .background(
+          GeometryReader { proxy in
+            Color.clear
+              .preference(
+                key: RichTextNaturalContentHeightKey.self,
+                value: proxy.size.height
+              )
+          }
+        )
     }
-      .frame(maxWidth: .infinity, alignment: .leading)
-      .background(Color.clear)
+    .frame(maxWidth: .infinity, alignment: .leading)
+    .background(Color.clear)
+    .onPreferenceChange(RichTextNaturalContentHeightKey.self) { newHeight in
+      handleNaturalHeightChange(newHeight)
+    }
+  }
+
+  private func handleNaturalHeightChange(_ newHeight: CGFloat) {
+    guard newHeight > 0.5 else { return }
+
+    if !hasSeededHeight {
+      hasSeededHeight = true
+      snapFadeState(to: newHeight)
+      return
+    }
+
+    if newHeight > previousContentHeight + 0.5 {
+      // A new line just wrapped. The old height marks the top of that line —
+      // everything above it is "already there" and keeps full opacity, and
+      // the new content below fades in via the Animatable renderer.
+      if snapshot.smoothNewLine {
+        lineFadeThresholdY = previousContentHeight
+        previousContentHeight = newHeight
+        lineFadeElapsed = 0
+        withAnimation(.easeOut(duration: Self.smoothNewLineDuration)) {
+          lineFadeElapsed = Self.smoothNewLineDuration
+        }
+      } else {
+        snapFadeState(to: newHeight)
+      }
+    } else if newHeight < previousContentHeight - 0.5 {
+      // Shrinks (item reset, reveal loop restart) snap without an animation
+      // — a collapse animation would fight the next grow.
+      snapFadeState(to: newHeight)
+    }
+  }
+
+  /// Sets the fade-state fields to the "no animation in progress" values
+  /// anchored at `height`. Used for the initial seed, when smoothNewLine is
+  /// off, and when content shrinks.
+  private func snapFadeState(to height: CGFloat) {
+    previousContentHeight = height
+    lineFadeThresholdY = height
+    lineFadeElapsed = Self.smoothNewLineDuration
   }
 
   @ViewBuilder
@@ -764,7 +967,12 @@ private struct RichTextHostedRootView: View {
   private func bodyContent(time: TimeInterval) -> some View {
     let resolvedTint = Color(uiColor: snapshot.effectColor)
     let resolvedTextColor = Color(uiColor: snapshot.textColor)
-    let fadeRenderer = RichTextFadeTextRenderer()
+    let fadeRenderer = RichTextFadeTextRenderer(
+      lineFadeElapsed: lineFadeElapsed,
+      lineFadeDuration: Self.smoothNewLineDuration,
+      lineFadeThresholdY: lineFadeThresholdY,
+      lineFadeEnabled: snapshot.smoothNewLine
+    )
     let baseText = buildText(from: snapshot.textSegments)
       .textRenderer(fadeRenderer)
     let overlayMaskText = buildText(from: snapshot.overlaySegments)
@@ -916,9 +1124,10 @@ private struct RichTextWidthFittingLayout: Layout {
       return .zero
     }
 
-    let idealSize = subview.sizeThatFits(.unspecified)
-    let proposedWidth = proposal.width
-    let resolvedWidth = proposedWidth ?? idealSize.width
+    // Only measure intrinsic width when SwiftUI doesn't propose one;
+    // otherwise the extra `.unspecified` pass doubles layout cost per
+    // streaming tick.
+    let resolvedWidth = proposal.width ?? subview.sizeThatFits(.unspecified).width
     let measuredHeight = subview.sizeThatFits(
       ProposedViewSize(width: resolvedWidth, height: proposal.height)
     ).height
