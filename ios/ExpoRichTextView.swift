@@ -584,12 +584,12 @@ private final class RichTextCoordinator: ObservableObject {
   }
 
   private func emitSnapshot(_ snapshot: RichTextRenderSnapshot) {
-    guard let props, isVisible else { return }
+    guard props != nil, isVisible else { return }
 
     let visibleCharacterCount = snapshot.visibleCharacterCount
     if lastEmittedVisibleCharacterCount != visibleCharacterCount {
       lastEmittedVisibleCharacterCount = visibleCharacterCount
-      props.onRevealProgress(["revealedCount": visibleCharacterCount])
+      dispatchEvent { $0.onRevealProgress(["revealedCount": visibleCharacterCount]) }
     }
 
     if
@@ -598,10 +598,13 @@ private final class RichTextCoordinator: ObservableObject {
     {
       lastEmittedRevealActive = snapshot.revealActive
       lastEmittedRevealVisibleCharacterCount = visibleCharacterCount
-      props.onVisualRevealStateChange([
-        "active": snapshot.revealActive,
-        "revealedCount": visibleCharacterCount,
-      ])
+      let revealActive = snapshot.revealActive
+      dispatchEvent {
+        $0.onVisualRevealStateChange([
+          "active": revealActive,
+          "revealedCount": visibleCharacterCount,
+        ])
+      }
     }
 
     let playbackPhase = snapshot.playbackPhase.rawValue
@@ -610,10 +613,23 @@ private final class RichTextCoordinator: ObservableObject {
     {
       lastEmittedPlaybackPhase = playbackPhase
       lastEmittedPlaybackVisibleCharacterCount = visibleCharacterCount
-      props.onPlaybackStateChange([
-        "phase": playbackPhase,
-        "revealedCount": visibleCharacterCount,
-      ])
+      dispatchEvent {
+        $0.onPlaybackStateChange([
+          "phase": playbackPhase,
+          "revealedCount": visibleCharacterCount,
+        ])
+      }
+    }
+  }
+
+  // Defer event dispatch to the next runloop turn so it never runs inside
+  // SwiftUI's appearance/update pass. If the hosting Fabric view was torn
+  // down during that pass, `detach()` will have cleared `props` before this
+  // fires, preventing a call into a dangling C++ EventEmitter.
+  private func dispatchEvent(_ send: @escaping (ExpoRichTextProps) -> Void) {
+    DispatchQueue.main.async { [weak self] in
+      guard let self, self.isVisible, let props = self.props else { return }
+      send(props)
     }
   }
 
@@ -1128,8 +1144,14 @@ private struct RichTextWidthFittingLayout: Layout {
     // otherwise the extra `.unspecified` pass doubles layout cost per
     // streaming tick.
     let resolvedWidth = proposal.width ?? subview.sizeThatFits(.unspecified).width
+    // Height must be `nil` so the subview reports its natural content
+    // height at `resolvedWidth`. Forwarding `proposal.height` lets the
+    // parent clamp the measurement, which truncates the reported size by
+    // ~1 line while the actual text still draws past it — the RN parent
+    // then either clips the overflow or the final line lands outside the
+    // bubble frame entirely.
     let measuredHeight = subview.sizeThatFits(
-      ProposedViewSize(width: resolvedWidth, height: proposal.height)
+      ProposedViewSize(width: resolvedWidth, height: nil)
     ).height
 
     return CGSize(
